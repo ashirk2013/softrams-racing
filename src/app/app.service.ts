@@ -35,9 +35,8 @@ export class AppService {
 
   addMember(member): Observable<Member> {
     return this.http
-      .post(`${this.api}/members`, member, this.httpOptions)
+      .post<Member>(`${this.api}/addMember`, member, this.httpOptions)
       .pipe(
-        tap((newMember: Member) => this.messageService.add(`added member with idd=${newMember.id}`)),
         catchError(this.handleError)
       );
   }

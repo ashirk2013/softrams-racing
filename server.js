@@ -6,7 +6,7 @@ var hsts = require('hsts');
 const path = require('path');
 var xssFilter = require('x-xss-protection');
 var nosniff = require('dont-sniff-mimetype');
-const request = require('request');
+const axios = require('axios');
 
 const app = express();
 
@@ -36,26 +36,50 @@ app.use(
 );
 
 app.get('/api/members', (req, res) => {
-  request('http://localhost:3000/members', (err, response, body) => {
-    if (response.statusCode === 200) {
-      res.send(body);
-    }
-  });
+  console.log('   +++ GET /api/members');
+  axios.get('http://localhost:3000/members')
+    .then((response) => {
+      console.log('   +++ response get api/members');
+      console.log(response.status);
+      if (response.status === 200) {
+        return res.send(response.data);
+      }
+    })
+    .catch((error) => {
+      console.log('   +++ error GET /api/members');
+      console.log(error);
+    });
 });
 
 app.get('/api/teams', (req, res) => {
-  request('http://localhost:3000/teams', (err, response, body) => {
-    if (response.statusCode === 200) {
-      return res.send(body);
-    }
-  });
+  axios.get('http://localhost:3000/teams')
+    .then((response) => {
+      if (response.status === 200) {
+        return res.send(response.data);
+      }
+    })
+    .catch((error) => {
+      console.log('   +++ error GET /api/teams');
+      console.log(error);
+    });
 });
 
 // Submit Form!
 app.post('/api/addMember', (req, res) => {
-  console.log('   +++ api/addMember post');
+  console.log('   +++ POST api/addMember');
   console.log(req.body);
-
+  axios.post('http://localhost:3000/members', req.body)
+    .then((response) => {
+      console.log('   +++ response POST /api/addMember');
+      console.log(`   +++ status: ${response.status}`);
+      if (response.status === 201) {
+        return res.send(response.data);
+      }
+    })
+    .catch((error) => {
+      console.log('   +++ error GET /api/teams');
+      console.log(error);
+    });
 });
 
 app.get('*', (req, res) => {
