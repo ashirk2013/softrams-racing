@@ -53,7 +53,8 @@ app.get('/api/teams', (req, res) => {
 
 // Submit Form!
 app.post('/api/addMember', (req, res) => {
-  
+  console.log('   +++ api/addMember post');
+  console.log(req.body);
 
 });
 

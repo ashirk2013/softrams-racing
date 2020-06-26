@@ -1,21 +1,31 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+
+import { Member } from './member';
+import { MessageService } from './message.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  api = 'http://localhost:8000/api';
+  private api = 'http://localhost:8000/api';
   username: string;
 
-  constructor(private http: HttpClient) {}
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
+
+  constructor(private http: HttpClient, private messageService: MessageService) {}
 
   // Returns all members
   getMembers() {
     return this.http
-      .get(`${this.api}/members`)
+      .get<Member[]>(`${this.api}/members`)
       .pipe(catchError(this.handleError));
   }
 
@@ -23,7 +33,14 @@ export class AppService {
     this.username = name;
   }
 
-  addMember(memberForm) {}
+  addMember(member): Observable<Member> {
+    return this.http
+      .post(`${this.api}/members`, member, this.httpOptions)
+      .pipe(
+        tap((newMember: Member) => this.messageService.add(`added member with idd=${newMember.id}`)),
+        catchError(this.handleError)
+      );
+  }
 
   getTeams() {
     return this.http

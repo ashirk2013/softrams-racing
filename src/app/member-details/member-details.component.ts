@@ -3,14 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 
-// This interface may be useful in the times ahead...
-interface Member {
-  firstName: string;
-  lastName: string;
-  jobTitle: string;
-  team: string;
-  status: string;
-}
+import { Member } from '../member';
 
 @Component({
   selector: 'app-member-details',
@@ -43,6 +36,6 @@ export class MemberDetailsComponent implements OnInit, OnChanges {
 
   onSubmit() {
     this.memberModel = this.memberForm.value;
-    console.log(this.memberModel);
+    this.appService.addMember(this.memberModel);
   }
 }
