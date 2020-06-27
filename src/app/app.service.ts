@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { Member } from './member';
+import { Team } from './team';
 import { MessageService } from './message.service';
 
 
@@ -22,29 +23,34 @@ export class AppService {
 
   constructor(private http: HttpClient, private messageService: MessageService) {}
 
-  // Returns all members
-  getMembers() {
-    return this.http
-      .get<Member[]>(`${this.api}/members`)
-      .pipe(catchError(this.handleError));
-  }
-
   setUsername(name: string): void {
     this.username = name;
   }
 
-  addMember(member): Observable<Member> {
+  // Returns all members
+  getMembers(): Observable<Member[]> {
+    return this.http
+      .get<Member[]>(`${this.api}/members`, this.httpOptions)
+      .pipe(
+        tap(_ => this.log('fetched members')),
+        catchError(this.handleError));
+  }
+
+  getTeams(): Observable<Team[]> {
+    return this.http
+      .get<Team[]>(`${this.api}/teams`, this.httpOptions)
+      .pipe(
+        tap(_ => this.log('fetched teams')), 
+        catchError(this.handleError));
+  }
+
+  addMember(member: Member): Observable<Member> {
     return this.http
       .post<Member>(`${this.api}/addMember`, member, this.httpOptions)
       .pipe(
+        tap((newMember: Member) => this.log(`added hero w/ id=${newMember.id}`)),
         catchError(this.handleError)
       );
-  }
-
-  getTeams() {
-    return this.http
-      .get(`${this.api}/teams`)
-      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -56,5 +62,9 @@ export class AppService {
       );
     }
     return [];
+  }
+
+  private log(message: string): void {
+    this.messageService.add(`AppService: ${message}`);
   }
 }
