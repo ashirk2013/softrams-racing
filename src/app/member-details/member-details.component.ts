@@ -36,6 +36,8 @@ export class MemberDetailsComponent implements OnInit, OnChanges {
 
   onSubmit() {
     this.memberModel = this.memberForm.value;
-    this.appService.addMember(this.memberModel).subscribe(member => console.log(member));
+    this.appService.addMember(this.memberModel).subscribe(() => {
+      this.router.navigate(['/members']);
+    });
   }
 }

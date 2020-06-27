@@ -9,6 +9,8 @@
         <th>Job Title</th>
         <th>Racing Team</th>
         <th>Status</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +21,8 @@
         <td>{{member?.jobTitle}}</td>
         <td>{{member?.team}}</td>
         <td>{{member?.status}}</td>
+        <td><a class="btn btn-primary" [routerLink]="['/editMember', member.id] "role="button">Edit</a></td>
+        <td><a class="btn btn-primary" href="#" role="button">Delete</a></td>
       </tr>
     </tbody>
   </table>

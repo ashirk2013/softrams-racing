@@ -39,6 +39,22 @@
       "team": "Formula 2 - Car 54",
       "status": "Active",
       "id": 5
+    },
+    {
+      "firstName": "Isla",
+      "lastName": "Shirk",
+      "jobTitle": "Kiddo",
+      "team": "Formula 1 - Car 8",
+      "status": "Active",
+      "id": 6
+    },
+    {
+      "firstName": "Brexley",
+      "lastName": "Shirk",
+      "jobTitle": "Kiddo2",
+      "team": "World Endurance Championship - Car 5",
+      "status": "Inactive",
+      "id": 7
     }
   ],
   "teams": [
