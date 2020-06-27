@@ -55,6 +55,14 @@
       "team": "World Endurance Championship - Car 5",
       "status": "Inactive",
       "id": 7
+    },
+    {
+      "firstName": "Jeff",
+      "lastName": "Newman",
+      "jobTitle": "Designer",
+      "team": "Formula 2 - Car 63",
+      "status": "Active",
+      "id": 8
     }
   ],
   "teams": [
