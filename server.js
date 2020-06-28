@@ -74,7 +74,7 @@ app.delete('/api/members/:id', (req, res) => {
 app.put('/api/members/:id', (req, res) => {
   let id = req.params.id;
   if (id && id != 0) {
-    axios.put(`http://localhost:3000/members/${id}`)
+    axios.put(`http://localhost:3000/members/${id}`, req.body)
       .then((response) => {
         if (response.status === 200) {
           return res.send(response.data);

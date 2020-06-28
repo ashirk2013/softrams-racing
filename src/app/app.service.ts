@@ -80,7 +80,7 @@ export class AppService {
     const id = typeof member === 'number' ? member : member.id;
     const url = `${this.api}/members/${id}`;
     return this.http.put<Member>(url, member, this.httpOptions).pipe(
-      tap(_ => this.log(`updated member id=${member.id}`)),
+      tap(_ => this.log(`updated member id=${id}`)),
       catchError(this.handleError)
     );
   }
