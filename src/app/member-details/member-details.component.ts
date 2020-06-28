@@ -21,6 +21,13 @@ export class MemberDetailsComponent implements OnInit, OnChanges {
   constructor(private fb: FormBuilder, private appService: AppService,
     private router: Router, private route: ActivatedRoute) {
     
+      this.memberForm = new FormGroup({
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        jobTitle: new FormControl('', Validators.required),
+        team: new FormControl('', Validators.required),
+        status: new FormControl('', Validators.required)
+      });
   }
 
   ngOnInit() {
@@ -34,11 +41,15 @@ export class MemberDetailsComponent implements OnInit, OnChanges {
     this.memberModel = Object.assign({}, this.memberModel, this.memberForm.value);
     if (this.memberModel.id) {
       this.appService.updateMember(this.memberModel)
-        .subscribe(() => this.router.navigate(['/members']));
+        .subscribe(() => this.back());
     } else {
       this.appService.addMember(this.memberModel)
-        .subscribe(() => this.router.navigate(['/members']));
+        .subscribe(() => this.back());
     }
+  }
+
+  back(): void {
+    this.router.navigate(['/members']);
   }
 
   getMember(): void {
@@ -47,30 +58,9 @@ export class MemberDetailsComponent implements OnInit, OnChanges {
       this.appService.getMember(id)
         .subscribe(member => {
           this.memberModel = member;
-          this.initMemberForm(member);
+          this.memberForm.setValue(member);
         });
-    } else {
-      this.initMemberForm();
     }
   }
-
-  initMemberForm(member?: Member): void {
-    if (member) {
-      this.memberForm = new FormGroup({
-        firstName: new FormControl(member.firstName, Validators.required),
-        lastName: new FormControl(member.lastName, Validators.required),
-        jobTitle: new FormControl(member.jobTitle, Validators.required),
-        team: new FormControl(member.team, Validators.required),
-        status: new FormControl(member.status, Validators.required)
-      });
-    } else {
-      this.memberForm = new FormGroup({
-        firstName: new FormControl('', Validators.required),
-        lastName: new FormControl('', Validators.required),
-        jobTitle: new FormControl('', Validators.required),
-        team: new FormControl('', Validators.required),
-        status: new FormControl('', Validators.required)
-      });
-    }
-  }
+  
 }
