@@ -55,6 +55,7 @@
     <button type="submit" [disabled]="!memberForm.valid" class="btn btn-primary pull-right">
       Save Member
     </button>
+    <a class="btn btn-outline-secondary" [routerLink]="['/members']" role="button">Back</a>
     <p>
       Form Status: {{memberForm.status}}
     </p>
