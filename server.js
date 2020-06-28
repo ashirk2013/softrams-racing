@@ -36,13 +36,10 @@ app.use(
 );
 
 app.get('/api/members/:id', (req, res) => {
-  console.log('   +++ GET /api/members/:id');
-
   let id = req.params.id;
   if (id && id != 0) {
     axios.get(`http://localhost:3000/members/${id}`)
       .then(response => {
-        console.log(`   +++ got response with status ${response.status}`);
         if (response.status === 200) {
           return res.send(response.data);
         }
@@ -61,7 +58,6 @@ app.delete('/api/members/:id', (req, res) => {
   if (id && id != 0) {
     axios.delete(`http://localhost:3000/members/${id}`)
       .then((response) => {
-        console.log(`   +++ got response with status ${response.status}`);
         if (response.status === 200) {
           return res.send(response.data);
         }

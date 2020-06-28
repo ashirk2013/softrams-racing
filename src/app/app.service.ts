@@ -76,8 +76,9 @@ export class AppService {
   }
 
   /** PUT: update the member on the server */
-  updateMember(member: Member): Observable<any> {
-    const url = `${this.api}/members`;
+  updateMember(member: Member | number): Observable<any> {
+    const id = typeof member === 'number' ? member : member.id;
+    const url = `${this.api}/members/${id}`;
     return this.http.put<Member>(url, member, this.httpOptions).pipe(
       tap(_ => this.log(`updated member id=${member.id}`)),
       catchError(this.handleError)
