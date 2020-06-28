@@ -21,8 +21,8 @@
         <td>{{member?.jobTitle}}</td>
         <td>{{member?.team}}</td>
         <td>{{member?.status}}</td>
-        <td><a class="btn btn-primary btn-sm" [routerLink]="['/editMember', member.id] "role="button">Edit</a></td>
-        <td><a class="btn btn-primary btn-sm" href="#" role="button">Delete</a></td>
+        <td><a class="btn btn-primary btn-sm" [routerLink]="['/edit', member.id]" role="button">Edit</a></td>
+        <td><a class="btn btn-primary btn-sm" (click)="deleteMemberById(member.id)" role="button">Delete</a></td>
       </tr>
     </tbody>
   </table>

@@ -33,6 +33,10 @@ const ROUTES = [
   {
     path: 'add',
     component: MemberDetailsComponent
+  },
+  {
+    path: 'edit/:id',
+    component: MemberDetailsComponent
   }
 ];
 

@@ -35,19 +35,74 @@ app.use(
   })
 );
 
+app.get('/api/members/:id', (req, res) => {
+  console.log('   +++ GET /api/members/:id');
+
+  let id = req.params.id;
+  if (id && id != 0) {
+    axios.get(`http://localhost:3000/members/${id}`)
+      .then(response => {
+        console.log(`   +++ got response with status ${response.status}`);
+        if (response.status === 200) {
+          return res.send(response.data);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        return res.status(response.status).send();
+      });
+  } else {
+    res.send();
+  }
+});
+
+app.delete('/api/members/:id', (req, res) => {
+  let id = req.params.id;
+  if (id && id != 0) {
+    axios.delete(`http://localhost:3000/members/${id}`)
+      .then((response) => {
+        console.log(`   +++ got response with status ${response.status}`);
+        if (response.status === 200) {
+          return res.send(response.data);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        return res.status(response.status).send();
+      });
+  } else {
+    res.send();
+  }
+});
+
+app.put('/api/members/:id', (req, res) => {
+  let id = req.params.id;
+  if (id && id != 0) {
+    axios.put(`http://localhost:3000/members/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          return res.send(response.data);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        return res.status(response.status).send();
+      });
+  } else {
+    res.send();
+  }
+});
+
 app.get('/api/members', (req, res) => {
-  console.log('   +++ GET /api/members');
   axios.get('http://localhost:3000/members')
     .then((response) => {
-      console.log('   +++ response get api/members');
-      console.log(response.status);
       if (response.status === 200) {
         return res.send(response.data);
       }
     })
-    .catch((error) => {
-      console.log('   +++ error GET /api/members');
-      console.log(error);
+    .catch(error => {
+      console.error(error);
+      return res.status(response.status).send();
     });
 });
 
@@ -58,27 +113,24 @@ app.get('/api/teams', (req, res) => {
         return res.send(response.data);
       }
     })
-    .catch((error) => {
-      console.log('   +++ error GET /api/teams');
-      console.log(error);
+    .catch(error => {
+      console.error(error);
+      return res.status(response.status).send();
     });
 });
 
 // Submit Form!
-app.post('/api/addMember', (req, res) => {
-  console.log('   +++ POST api/addMember');
+app.post('/api/members', (req, res) => {
   console.log(req.body);
   axios.post('http://localhost:3000/members', req.body)
     .then((response) => {
-      console.log('   +++ response POST /api/addMember');
-      console.log(`   +++ status: ${response.status}`);
       if (response.status === 201) {
         return res.send(response.data);
       }
     })
-    .catch((error) => {
-      console.log('   +++ error GET /api/teams');
-      console.log(error);
+    .catch(error => {
+      console.error(error);
+      return res.status(response.status).send();
     });
 });
 
